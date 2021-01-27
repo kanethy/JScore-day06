@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict";
+       var tom={
+           ename:"tom",
+           eage:25
+       }
+
+       Object.defineProperties(tom,{
+           _eage:{
+               value:tom.eage,
+               writable:true,
+               enumerable:false,
+               configurable:false
+           },
+           eage:{
+               get:function(){
+                   console.log(`自动调用了一次get，查询的属性值是${this._eage}`);
+                   return this._eage;
+               },
+               set:function(value){
+                   if(value>=18 && value<=65){
+                       console.log(`自动调用一次set，传入的参数${value}在18~65之间`);
+                       this._eage=value;
+                   }else{
+                       throw Error(`修改失败，修改的参数${value}必须在18~65之间`);
+                   }
+               },
+               enumerable:true,
+               configurable:false
+           }
+       })
+        
+       console.log(tom.eage);
+       tom.eage=27;
+       console.log(tom);
+       //tom.eage=2;
+
+       var eric={
+           eid:1001,
+           ename:"eric"
+       }
+
+       //Object.preventExtensions(eric);
+       Object.seal(eric);
+       //eric.id=2;
+       //delete eric.ename;
+       console.log(eric);
+
+
+       var pool={
+           host:"127.0.0.1",
+           post:3306,
+            db:"xz"
+       }
+
+       Object.freeze(pool);
+
+       pool.host="100.1.1.0";
+       console.log(pool);
+      
+    </script>
+</body>
+</html>
